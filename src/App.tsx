@@ -1,15 +1,15 @@
-import {Button} from "@/components/ui/button.tsx";
-
+import {Route, Routes, Navigate} from "react-router-dom";
+import {LoginScreen} from "@/screens/LoginScreen.tsx";
+import {RegisterScreen} from "@/screens/RegisterScreen.tsx";
 
 function App() {
   return (
-      <div className="w-full h-full flex items-center justify-center min-h-screen">
-          <Button variant="default">Button</Button>
-          <Button variant="secondary">Button</Button>
-          <Button variant="link">Button</Button>
-          <Button variant="outline">Button</Button>
-          <Button variant="ghost">Button</Button>
-          <Button variant="destructive">Button</Button>
+      <div className="w-full min-h-screen flex items-center justify-center">
+          <Routes>
+              <Route path="/" element={<Navigate to="/login" />} />
+              <Route path="/login" element={<LoginScreen />} />
+              <Route path="/register" element={<RegisterScreen />} />
+          </Routes>
       </div>
   )
 }
