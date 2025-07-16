@@ -1,22 +1,64 @@
+import { User, Mail } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Separator } from "@/components/ui/separator";
+import {AuthLayout} from "@/components/auth/AuthLayout.tsx";
+import {TextInput} from "@/components/auth/TextInput.tsx";
+import {PasswordInput} from "@/components/auth/PasswordInput.tsx";
+import {SocialButton} from "@/components/auth/SocialButton.tsx";
+import {AuthFooter} from "@/components/auth/AuthFooter.tsx";
 
-export const RegisterScreen = () => {
-    return (
-        <div className="w-full min-h-screen flex items-center justify-center bg-gray-100 px-4">
-            <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-md">
-                <h1 className="text-2xl font-bold mb-4">Register</h1>
-                <p className="text-sm text-gray-500 mb-6">Create your account to get started.</p>
+export const RegisterScreen = () => (
+    <AuthLayout
+        title="Create your account."
+        subtitle="Join us by filling out the information below."
+    >
+        <div className="space-y-6">
+            <TextInput id="name" placeholder="John Doe" Icon={User} />
 
-                <div className="space-y-4">
-                    <Button className="w-full" variant="default">Register</Button>
-                </div>
+            <TextInput
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                Icon={Mail}
+            />
 
-                <p className="mt-6 text-sm text-center text-gray-500">
-                    Already have an account?{" "}
-                    <Link to="/login" className="text-blue-600 hover:underline">Login</Link>
-                </p>
+            <PasswordInput id="password" />
+
+            <PasswordInput id="confirm" placeholder="Repeat password" />
+
+            {/* Terms */}
+            <div className="flex items-start gap-2">
+                <Checkbox id="terms" />
+                <Label htmlFor="terms" className="text-sm text-gray-600 leading-snug">
+                    I agree to the{" "}
+                    <a href="#" className="text-primary hover:underline">
+                        Terms of Service
+                    </a>{" "}
+                    and{" "}
+                    <a href="#" className="text-primary hover:underline">
+                        Privacy Policy
+                    </a>
+                    .
+                </Label>
             </div>
+
+            {/* Aktivasyon kodu (isteğe bağlı) */}
+            {/* <TextInput id="code" placeholder="Activation code" Icon={Key} /> */}
+
+            <Button className="w-full">Create account</Button>
+
+            <Separator />
+
+            <SocialButton icon={FcGoogle}>Sign up with Google</SocialButton>
+
+            <AuthFooter
+                text="Already have an account?"
+                link="/login"
+                linkText="Login"
+            />
         </div>
-    )
-}
+    </AuthLayout>
+);

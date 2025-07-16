@@ -1,24 +1,53 @@
+import { Mail } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Separator } from "@/components/ui/separator";
+import {AuthLayout} from "@/components/auth/AuthLayout.tsx";
+import {TextInput} from "@/components/auth/TextInput.tsx";
+import {PasswordInput} from "@/components/auth/PasswordInput.tsx";
+import {SocialButton} from "@/components/auth/SocialButton.tsx";
+import {AuthFooter} from "@/components/auth/AuthFooter.tsx";
 
-export const LoginScreen = () => {
-    return (
-        <div className="w-full min-h-screen flex items-center justify-center bg-gray-100 px-4">
-            <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-md">
-                <h1 className="text-2xl font-bold mb-4">Login</h1>
-                <p className="text-sm text-gray-500 mb-6">Welcome back! Please enter your credentials.</p>
+export const LoginScreen = () => (
+    <AuthLayout
+        title="Sign in to your account."
+        subtitle="Welcome back! Please enter your credentials."
+    >
+        <div className="space-y-6">
+            <TextInput
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                Icon={Mail}
+            />
 
-                {/* Form alanı buraya eklenecek */}
-                <div className="space-y-4">
-                    {/* Placeholder için buton */}
-                    <Button className="w-full" variant="default">Login</Button>
+            <PasswordInput id="password" />
+
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                    <Checkbox id="remember" />
+                    <Label htmlFor="remember" className="text-sm text-gray-600">
+                        Remember me
+                    </Label>
                 </div>
-
-                <p className="mt-6 text-sm text-center text-gray-500">
-                    Don’t have an account?{" "}
-                    <Link to="/register" className="text-blue-600 hover:underline">Register</Link>
-                </p>
+                <a href="#" className="text-sm text-primary hover:underline">
+                    Forgot password?
+                </a>
             </div>
+
+            <Button className="w-full">Login</Button>
+
+            <Separator />
+
+            <SocialButton icon={FcGoogle}>Sign in with Google</SocialButton>
+
+            <AuthFooter
+                text="Don’t have an account?"
+                link="/register"
+                linkText="Register"
+            />
         </div>
-    )
-}
+    </AuthLayout>
+);
