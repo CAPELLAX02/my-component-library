@@ -9,45 +9,55 @@ import {TextInput} from "@/components/auth/TextInput.tsx";
 import {PasswordInput} from "@/components/auth/PasswordInput.tsx";
 import {SocialButton} from "@/components/auth/SocialButton.tsx";
 import {AuthFooter} from "@/components/auth/AuthFooter.tsx";
+import {useNavigate} from "react-router-dom";
 
-export const LoginScreen = () => (
-    <AuthLayout
-        title="Sign in to your account."
-        subtitle="Welcome back! Please enter your credentials."
-    >
-        <div className="space-y-6">
-            <TextInput
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                Icon={Mail}
-            />
+export const LoginScreen = () => {
+    const navigate = useNavigate();
 
-            <PasswordInput id="password" />
+    return (
+        <AuthLayout
+            title="Sign in to your account."
+            subtitle="Welcome back! Please enter your credentials to sign in to your account."
+        >
+            <div className="space-y-6">
+                <TextInput
+                    id="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    Icon={Mail}
+                />
 
-            <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                    <Checkbox id="remember" />
-                    <Label htmlFor="remember" className="text-sm text-gray-600">
-                        Remember me
-                    </Label>
+                <PasswordInput id="password" />
+
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <Checkbox id="remember" />
+                        <Label htmlFor="remember" className="text-sm text-gray-600">
+                            Remember me
+                        </Label>
+                    </div>
+                    <a href="#" className="text-sm text-primary hover:underline">
+                        Forgot password?
+                    </a>
                 </div>
-                <a href="#" className="text-sm text-primary hover:underline">
-                    Forgot password?
-                </a>
+
+                <Button
+                    className="w-full"
+                    onClick={() => navigate("/home")}
+                >
+                    Login
+                </Button>
+
+                <Separator />
+
+                <SocialButton icon={FcGoogle}>Sign in with Google</SocialButton>
+
+                <AuthFooter
+                    text="Don’t have an account?"
+                    link="/register"
+                    linkText="Register"
+                />
             </div>
-
-            <Button className="w-full">Login</Button>
-
-            <Separator />
-
-            <SocialButton icon={FcGoogle}>Sign in with Google</SocialButton>
-
-            <AuthFooter
-                text="Don’t have an account?"
-                link="/register"
-                linkText="Register"
-            />
-        </div>
-    </AuthLayout>
-);
+        </AuthLayout>
+    );
+}
