@@ -6,8 +6,8 @@ type TextInputProps = {
     type?: React.HTMLInputTypeAttribute;
     placeholder?: string;
     Icon: React.ComponentType<{ className?: string }>;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const TextInput = ({

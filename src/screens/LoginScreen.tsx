@@ -10,9 +10,18 @@ import {PasswordInput} from "@/components/auth/PasswordInput.tsx";
 import {SocialButton} from "@/components/auth/SocialButton.tsx";
 import {AuthFooter} from "@/components/auth/AuthFooter.tsx";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 export const LoginScreen = () => {
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+
     const navigate = useNavigate();
+
+    const handleLogin = (email: string, password: string) => {
+        console.log(email, password);
+        navigate("/home")
+    }
 
     return (
         <AuthLayout
@@ -25,9 +34,15 @@ export const LoginScreen = () => {
                     type="email"
                     placeholder="you@example.com"
                     Icon={Mail}
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
                 />
 
-                <PasswordInput id="password" />
+                <PasswordInput
+                    id="password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                />
 
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -43,7 +58,7 @@ export const LoginScreen = () => {
 
                 <Button
                     className="w-full"
-                    onClick={() => navigate("/home")}
+                    onClick={() => handleLogin(email, password)}
                 >
                     Login
                 </Button>

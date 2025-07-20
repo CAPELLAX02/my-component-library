@@ -6,11 +6,15 @@ import * as React from "react";
 type PasswordInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
     id: string;
     placeholder?: string;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const PasswordInput = ({
                                   id,
                                   placeholder = "••••••",
+                                  value,
+                                  onChange,
                                   ...rest
                               }: PasswordInputProps) => {
     const [show, setShow] = useState(false);
@@ -26,6 +30,8 @@ export const PasswordInput = ({
             <Input
                 id={id}
                 type={show ? "text" : "password"}
+                value={value}
+                onChange={onChange}
                 placeholder={placeholder}
                 className="pl-10 pr-11"
                 {...rest}

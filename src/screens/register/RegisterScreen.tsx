@@ -7,21 +7,23 @@ import { AuthFooter } from "@/components/auth/AuthFooter";
 import { Separator } from "@/components/ui/separator";
 import { SocialButton } from "@/components/auth/SocialButton";
 import { FcGoogle } from "react-icons/fc";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const RegisterScreen = () => {
-    const [email, setEmail] = useState<string>("");
+    const [email, setEmail] = useState("");
     const navigate = useNavigate();
 
-    const handleContinue = (email: string) => {
+    const handleContinue = () => {
         localStorage.setItem("email", email);
         navigate("/register/otp");
     };
 
     return (
-        <AuthLayout title="Create your account." subtitle="Let’s start with your email.">
+        <AuthLayout
+            title="Let’s get you started"
+            subtitle="Enter the email address you’d like to use. We’ll send a verification code to confirm it's really you."
+        >
             <div className="space-y-6">
-                {/* Email field */}
                 <TextInput
                     id="email"
                     type="email"
@@ -31,18 +33,13 @@ export const RegisterScreen = () => {
                     onChange={(e) => setEmail(e.target.value)}
                 />
 
-                <Button
-                    className="w-full"
-                    onClick={() => handleContinue(email)}
-                >
+                <Button className="w-full" onClick={handleContinue}>
                     Continue
                 </Button>
 
                 <Separator />
 
-                <SocialButton icon={FcGoogle}>
-                    Sign in with Google
-                </SocialButton>
+                <SocialButton icon={FcGoogle}>Sign up with Google</SocialButton>
 
                 <AuthFooter
                     text="Already have an account?"

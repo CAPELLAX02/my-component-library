@@ -5,14 +5,15 @@ import { Separator } from "@/components/ui/separator";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 
-const TOTAL = 300;
+const TOTAL = 180;
 
 export const ActivationScreen = () => {
     const [sec, setSec] = useState(TOTAL);
     const [expired, setExpired] = useState(false);
 
     useEffect(() => {
-        if (sec === 0) return setExpired(true);
+        if (sec === 0)
+            return setExpired(true);
         const t = setTimeout(() => setSec((s) => s - 1), 1000);
         return () => clearTimeout(t);
     }, [sec]);
@@ -21,15 +22,21 @@ export const ActivationScreen = () => {
     const circumference = 2 * Math.PI * radius;
     const offset = circumference * (1 - sec / TOTAL);
 
-    const email = localStorage.getItem("email");
+    const email: string | null = localStorage.getItem("email") ? localStorage.getItem("email") : null;
 
     return (
         <>
             <AuthLayout title="Verify Your Email" subtitle="Step 2 of 4">
                 <p className="text-slate-600 text-sm">
                     A verification code has been sent to {' '}
-                    <span className="text-slate-900 font-bold">{email}.</span>{' '}
-                    Enter the code to verify that you own this email.
+                    {email && (
+                        <span className="text-slate-900 font-bold">{email}.</span>
+                    )}
+                    {email === null && (
+                        <span>the email address you provided.</span>
+                    )}
+                    {' '}
+                    Enter the code to verify the ownership of this email. This code will expire in 3 minutes.
                 </p>
                 <div className="space-y-6 flex flex-col items-center">
                     {/* Countdown circle */}
@@ -56,7 +63,7 @@ export const ActivationScreen = () => {
                             />
                         </svg>
                         <div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-slate-900">
-                            {sec}s
+                            {sec}
                         </div>
                     </div>
 
@@ -81,7 +88,7 @@ export const ActivationScreen = () => {
                     <Separator />
 
                     {/* Kod tekrar gönder */}
-                    <Button variant="ghost" className="w-full text-primary">
+                    <Button className="w-full text-primary bg-slate-100 hover:bg-slate-200">
                         Resend Code
                     </Button>
                 </div>
@@ -90,16 +97,21 @@ export const ActivationScreen = () => {
             {/* Expired Dialog */}
             <Dialog open={expired}>
                 <DialogContent>
-                    <DialogHeader>Code expired</DialogHeader>
-                    Kodun süresi doldu. Lütfen tekrar gönderin.
+                    <DialogHeader className="text-lg font-semibold">
+                        Code Expired
+                    </DialogHeader>
+
+                    The verification code has been expired. Please request a new one using the button below.
+
                     <DialogFooter>
                         <Button
+                            className="w-full my-2"
                             onClick={() => {
                                 setSec(TOTAL);
                                 setExpired(false);
                             }}
                         >
-                            Resend
+                            Resend code {email && (<span>to {email}</span>)}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
